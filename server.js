@@ -490,32 +490,32 @@ app.get('/admin', requireAdminSession, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// Função para buscar apps da SquareCloud
-async function getSquareCloudApps() {
-  const token = process.env.SQUARECLOUD_TOKEN;
-  if (!token) throw new Error('Token SquareCloud não configurado');
-  const res = await fetch('https://api.squarecloud.app/v1/app/list', {
+// Função para buscar apps da Discloud
+async function getDiscloudApps() {
+  const token = process.env.DISCLOUD_TOKEN;
+  if (!token) throw new Error('Token Discloud não configurado');
+  const res = await fetch('https://api.discloud.app/v2/status/all', {
     headers: {
-      'Authorization': token
+      'api-token': token
     }
   });
-  if (!res.ok) throw new Error(`Erro na API SquareCloud: ${res.status}`);
+  if (!res.ok) throw new Error(`Erro na API Discloud: ${res.status}`);
   const data = await res.json();
   return data.apps || [];
 }
 
-// Endpoint para listar bots hospedados na SquareCloud (sem filtro)
-app.get('/api/squarecloud/bots', async (req, res) => {
+// Endpoint para listar bots hospedados na Discloud (sem filtro)
+app.get('/api/discloud/bots', async (req, res) => {
   try {
-    const apps = await getSquareCloudApps();
+    const apps = await getDiscloudApps();
     const bots = apps.map(bot => ({
       id: bot.id || bot._id,
-      name: bot.name,
-      status: bot.status || 'offline'
+      name: bot.name || bot.id,
+      status: bot.online ? 'online' : 'offline'
     }));
     res.json(bots);
   } catch (err) {
-    console.error('Erro ao buscar bots da SquareCloud:', err.message);
+    console.error('Erro ao buscar bots da Discloud:', err.message);
     res.status(500).json([]);
   }
 });
@@ -523,11 +523,11 @@ app.get('/api/squarecloud/bots', async (req, res) => {
 // Endpoint para verificar status do sistema
 app.get('/api/status', (req, res) => {
   const mercadoPagoAtivo = !!process.env.MERCADO_PAGO_ACCESS_TOKEN;
-  const squareCloudAtivo = !!process.env.SQUARECLOUD_TOKEN;
+  const discloudAtivo = !!process.env.DISCLOUD_TOKEN;
 
   res.json({
     mercadopago: mercadoPagoAtivo ? 'online' : 'offline',
-    hosting: squareCloudAtivo ? 'online' : 'offline'
+    hosting: discloudAtivo ? 'online' : 'offline'
   });
 });
 

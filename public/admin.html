@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel Admin - Cye Apps</title>
+  <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0e0f1b;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #0a0b13;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1c1c2e;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      color: #fff;
+      user-select: none;
+    }
+    .navbar h1::before {
+      content: '┃';
+      color: #4e6bff;
+      margin-right: 0.5rem;
+    }
+    .menu-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin: 2rem auto 1rem;
+      user-select: none;
+    }
+    .header h2 {
+      font-size: 2.2rem;
+      color: #ff4f5e;
+      margin-bottom: 0.3rem;
+    }
+    .header p {
+      color: #a0a0a0;
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 1.5rem auto;
+      gap: 1rem;
+      flex-wrap: wrap;
+      max-width: 700px;
+      user-select: none;
+    }
+    .tab {
+      background-color: #161622;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .tab:hover {
+      background-color: #2e3af5;
+    }
+    .tab.active {
+      background-color: #2e3af5;
+      box-shadow: 0 0 15px #2e3af5;
+    }
+
+    /* Content Boxes */
+    .content-box {
+      background-color: #151522;
+      max-width: 700px;
+      margin: 1rem auto 3rem;
+      padding: 1.8rem 2rem;
+      border-radius: 12px;
+      border: 1px solid #1f1f2f;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      display: none;
+      color: #ddd;
+      font-size: 1rem;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .content-box.active {
+      display: block;
+    }
+    .content-box h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      color: #ff4f5e;
+      user-select: none;
+    }
+
+    /* Status Items */
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #2a2a3d;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .status-item:last-child {
+      border-bottom: none;
+    }
+    .status-online {
+      color: #25e177;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .status-offline {
+      color: #ff4f5e;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .status-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .status-online .status-icon {
+      background-color: #25e177;
+      box-shadow: 0 0 5px #25e177;
+    }
+    .status-offline .status-icon {
+      background-color: #ff4f5e;
+      box-shadow: 0 0 5px #ff4f5e;
+    }
+
+    /* Usuários List */
+    ul.user-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      max-height: 420px;
+      overflow-y: auto;
+      border: 1px solid #2a2a3d;
+      border-radius: 8px;
+      background-color: #121223;
+    }
+    ul.user-list li {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid #2a2a3d;
+      transition: background-color 0.15s ease;
+      cursor: default;
+    }
+    ul.user-list li:last-child {
+      border-bottom: none;
+    }
+    ul.user-list li:hover {
+      background-color: #2e3af5;
+      color: #fff;
+    }
+
+    /* Cupons list */
+    ul.cupom-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      max-height: 320px;
+      overflow-y: auto;
+      border: 1px solid #2a2a3d;
+      border-radius: 8px;
+      background-color: #121223;
+      font-size: 1rem;
+    }
+    ul.cupom-list li {
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #2a2a3d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    ul.cupom-list li:last-child {
+      border-bottom: none;
+    }
+    ul.cupom-list li span {
+      flex-grow: 1;
+    }
+
+    /* Formulário Cupons */
+    form#form-cupom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    form#form-cupom input[type="text"],
+    form#form-cupom input[type="number"] {
+      flex: 1 1 120px;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #2a2a3d;
+      background-color: #1a1c2c;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    form#form-cupom input[type="text"]:focus,
+    form#form-cupom input[type="number"]:focus {
+      border-color: #2e3af5;
+      box-shadow: 0 0 8px #2e3af5;
+    }
+    form#form-cupom button {
+      padding: 0.5rem 1rem;
+      background-color: #2e3af5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    form#form-cupom button:hover {
+      background-color: #1c24b8;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      color: #aaa;
+      user-select: none;
+      margin-top: auto;
+    }
+    .footer h2 {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    .footer h2::before {
+      content: '┃';
+      color: #4e6bff;
+      margin-right: 0.5rem;
+    }
+    .footer p {
+      font-size: 1rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.4;
+      color: #bbb;
+    }
+
+    /* Scrollbar estilizado */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121223;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #2e3af5;
+      border-radius: 20px;
+      border: 2px solid #121223;
+    }
+
+    /* Responsivo */
+    @media (max-width: 720px) {
+      .content-box {
+        margin: 1rem 1rem 2rem;
+        max-width: 100%;
+      }
+      .tabs {
+        max-width: 100%;
+      }
+      form#form-cupom {
+        flex-direction: column;
+      }
+      form#form-cupom input,
+      form#form-cupom button {
+        flex: 1 1 auto;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Cye Apps</h1>
+    <div class="menu-icon" title="Menu">☰</div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h2>🛡️ Painel de Administração</h2>
+    <p>Gerencie todos os aspectos do Cye Apps</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist" aria-label="Seções do painel">
+    <div class="tab active" data-tab="usuarios" role="tab" tabindex="0" aria-selected="true" aria-controls="usuarios">Usuários</div>
+    <div class="tab" data-tab="bots" role="tab" tabindex="-1" aria-selected="false" aria-controls="bots">Bots</div>
+    <div class="tab" data-tab="vendas" role="tab" tabindex="-1" aria-selected="false" aria-controls="vendas">Vendas</div>
+    <div class="tab" data-tab="cupons" role="tab" tabindex="-1" aria-selected="false" aria-controls="cupons">Cupons</div>
+    <div class="tab" data-tab="sistema" role="tab" tabindex="-1" aria-selected="false" aria-controls="sistema">Sistema</div>
+  </div>
+
+  <!-- Conteúdos -->
+  <div class="content-box active" id="usuarios" role="tabpanel" tabindex="0" aria-labelledby="usuarios-tab">
+    <h3>👤 Usuários</h3>
+    <p>Carregando usuários...</p>
+  </div>
+
+  <div class="content-box" id="bots" role="tabpanel" tabindex="0" aria-labelledby="bots-tab">
+    <h3>🤖 Bots</h3>
+    <p>Carregando bots...</p>
+  </div>
+
+  <div class="content-box" id="vendas" role="tabpanel" tabindex="0" aria-labelledby="vendas-tab">
+    <h3>💰 Vendas</h3>
+    <p>Carregando vendas...</p>
+  </div>
+
+  <div class="content-box" id="cupons" role="tabpanel" tabindex="0" aria-labelledby="cupons-tab">
+    <h3>🎟️ Cupons</h3>
+    <form id="form-cupom" aria-label="Formulário para criar cupom">
+      <input type="text" id="codigo" name="codigo" placeholder="Código do cupom" required aria-required="true" />
+      <input type="number" id="desconto" name="desconto" placeholder="Desconto (%)" min="1" max="100" required aria-required="true" />
+      <button type="submit">Criar Cupom</button>
+    </form>
+    <ul class="cupom-list" id="lista-cupons" aria-live="polite" aria-relevant="additions removals">
+      <li>Carregando cupons...</li>
+    </ul>
+  </div>
+
+  <div class="content-box" id="sistema" role="tabpanel" tabindex="0" aria-labelledby="sistema-tab">
+    <h3>🔧 Status do Sistema</h3>
+    <p>Carregando status...</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <h2>Cye Apps</h2>
+    <p>Transformando ideias em realidade através de soluções tecnológicas inovadoras. Hospedagem de bots Discord e muito mais.</p>
+  </div>
+
+  <!-- Scripts para navegação das abas e consumo das APIs -->
+  <script>
+    // Função auxiliar para verificar se a resposta é JSON
+    async function parseJsonResponse(response) {
+      const text = await response.text();
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        throw new Error(`Resposta inválida: ${text.substring(0, 100)}`);
+      }
+    }
+
+    // Mock de dados para teste (remova quando o backend estiver pronto)
+    if (window.location.port === "8080") {
+      // Mock para /api/usuarios
+      window.fetch = new Proxy(window.fetch, {
+        apply: async function(target, thisArg, args) {
+          const [url, options] = args;
+          
+          if (url === '/api/usuarios') {
+            return Promise.resolve({
+              ok: true,
+              status: 200,
+              json: () => Promise.resolve({
+                usuarios: [
+                  { nome: "João Silva", email: "joao@example.com" },
+                  { nome: "Maria Souza", email: "maria@example.com" }
+                ]
+              })
+            });
+          }
+          
+          if (url === '/api/bots') {
+            return Promise.resolve({
+              ok: true,
+              status: 200,
+              json: () => Promise.resolve({
+                bots: [
+                  { id: 1, name: "Bot de Moderação" },
+                  { id: 2, name: "Bot de Música" }
+                ]
+              })
+            });
+          }
+          
+          if (url === '/api/vendas') {
+            return Promise.resolve({
+              ok: true,
+              status: 200,
+              json: () => Promise.resolve({
+                total: 42,
+                vendas: [
+                  { id: 1, valor: 100, produto: "Assinatura Premium" },
+                  { id: 2, valor: 50, produto: "Serviço Personalizado" }
+                ]
+              })
+            });
+          }
+          
+          if (url === '/api/status') {
+            return Promise.resolve({
+              ok: true,
+              status: 200,
+              json: () => Promise.resolve({
+                apiPrincipal: { online: true },
+                bancoDados: { online: true },
+                botsHost: { online: true },
+                mercadoPago: { online: true }
+              })
+            });
+          }
+          
+          if (url === '/api/cupom/listar') {
+            return Promise.resolve({
+              ok: true,
+              status: 200,
+              json: () => Promise.resolve({
+                cupons: [
+                  { codigo: "DESC10", desconto: 10 },
+                  { codigo: "PROMO20", desconto: 20 }
+                ]
+              })
+            });
+          }
+          
+          if (url === '/api/cupom/criar' && options?.method === 'POST') {
+            const body = JSON.parse(options.body);
+            return Promise.resolve({
+              ok: true,
+              status: 201,
+              json: () => Promise.resolve({
+                success: true,
+                message: "Cupom criado com sucesso",
+                cupom: body
+              })
+            });
+          }
+          
+          return target.apply(thisArg, args);
+        }
+      });
+    }
+
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content-box');
+
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', () => activateTab(tab, idx));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const nextIdx = (idx + 1) % tabs.length;
+          activateTab(tabs[nextIdx], nextIdx);
+          tabs[nextIdx].focus();
+        }
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prevIdx = (idx - 1 + tabs.length) % tabs.length;
+          activateTab(tabs[prevIdx], prevIdx);
+          tabs[prevIdx].focus();
+        }
+      });
+    });
+
+    function activateTab(tab, idx) {
+      tabs.forEach((t, i) => {
+        t.classList.toggle('active', i === idx);
+        t.setAttribute('aria-selected', i === idx);
+        t.setAttribute('tabindex', i === idx ? '0' : '-1');
+        contents[i].classList.toggle('active', i === idx);
+      });
+      const tabId = tab.getAttribute('data-tab');
+      if (tabId === 'usuarios') carregarUsuarios();
+      if (tabId === 'bots') carregarBots();
+      if (tabId === 'vendas') carregarVendas();
+      if (tabId === 'cupons') carregarCupons();
+      if (tabId === 'sistema') carregarStatus();
+    }
+
+    // Inicializa a primeira aba
+    carregarUsuarios();
+
+    // Função para mostrar usuários
+    async function carregarUsuarios() {
+      const container = document.getElementById('usuarios');
+      container.innerHTML = '<h3>👤 Usuários</h3><p>Carregando usuários...</p>';
+      
+      try {
+        const res = await fetch('/api/usuarios');
+        const data = await parseJsonResponse(res);
+        
+        if (!res.ok) {
+          throw new Error(data.message || `HTTP ${res.status}`);
+        }
+
+        if (data.usuarios && data.usuarios.length > 0) {
+          const listItems = data.usuarios.map(u => {
+            const nome = u.nome || u.username || u.email || JSON.stringify(u);
+            return `<li title="${nome}">${nome}</li>`;
+          }).join('');
+          container.innerHTML = `<h3>👤 Usuários</h3><ul class="user-list">${listItems}</ul>`;
+        } else {
+          container.innerHTML = '<h3>👤 Usuários</h3><p>Nenhum usuário encontrado.</p>';
+        }
+      } catch (err) {
+        container.innerHTML = `<h3>👤 Usuários</h3><p style="color:#ff4f5e;">Erro ao carregar usuários: ${err.message}</p>`;
+        console.error('Erro ao carregar usuários:', err);
+      }
+    }
+
+    // Função para mostrar bots
+    async function carregarBots() {
+      const container = document.getElementById('bots');
+      container.innerHTML = '<h3>🤖 Bots</h3><p>Carregando bots...</p>';
+      
+      try {
+        const res = await fetch('/api/bots');
+        const data = await parseJsonResponse(res);
+        
+        if (!res.ok) {
+          throw new Error(data.message || `HTTP ${res.status}`);
+        }
+
+        if (data.bots && data.bots.length > 0) {
+          const botsHtml = data.bots.map(bot => 
+            `<li title="${bot.name}">${bot.name} (ID: ${bot.id})</li>`
+          ).join('');
+          container.innerHTML = `<h3>🤖 Bots</h3><ul class="user-list">${botsHtml}</ul>`;
+        } else {
+          container.innerHTML = '<h3>🤖 Bots</h3><p>Nenhum bot encontrado.</p>';
+        }
+      } catch (err) {
+        container.innerHTML = `<h3>🤖 Bots</h3><p style="color:#ff4f5e;">Erro ao carregar bots: ${err.message}</p>`;
+        console.error('Erro ao carregar bots:', err);
+      }
+    }
+
+    // Função para mostrar vendas
+    async function carregarVendas() {
+      const container = document.getElementById('vendas');
+      container.innerHTML = '<h3>💰 Vendas</h3><p>Carregando vendas...</p>';
+      
+      try {
+        const res = await fetch('/api/vendas');
+        const data = await parseJsonResponse(res);
+        
+        if (!res.ok) {
+          throw new Error(data.message || `HTTP ${res.status}`);
+        }
+
+        if (typeof data.total === 'number') {
+          container.innerHTML = `<h3>💰 Vendas</h3>
+            <p><strong>Total de vendas:</strong> ${data.total}</p>`;
+        } else {
+          container.innerHTML = '<h3>💰 Vendas</h3><p>Nenhuma venda encontrada ou erro.</p>';
+        }
+      } catch (err) {
+        container.innerHTML = `<h3>💰 Vendas</h3><p style="color:#ff4f5e;">Erro ao carregar vendas: ${err.message}</p>`;
+        console.error('Erro ao carregar vendas:', err);
+      }
+    }
+
+    // Função para mostrar status do sistema
+    async function carregarStatus() {
+      const container = document.getElementById('sistema');
+      container.innerHTML = `<h3>🔧 Status do Sistema</h3><p>Carregando status...</p>`;
+      
+      try {
+        const res = await fetch('/api/status');
+        const data = await parseJsonResponse(res);
+        
+        if (!res.ok) {
+          throw new Error(data.message || `HTTP ${res.status}`);
+        }
+
+        function statusItem(nome, online, error) {
+          const classe = online ? 'status-online' : 'status-offline';
+          const texto = online ? 'Online' : 'Offline';
+          const erroTxt = error ? ` - ${error}` : '';
+          return `<div class="status-item">
+            <span>${nome}</span>
+            <span class="${classe}"><span class="status-icon"></span>${texto}${erroTxt}</span>
+          </div>`;
+        }
+
+        container.innerHTML = `<h3>🔧 Status do Sistema</h3>
+          ${statusItem('API Principal', data.apiPrincipal?.online)}
+          ${statusItem('Base de Dados', data.bancoDados?.online, data.bancoDados?.error)}
+          ${statusItem('Hospedagem de Bots', data.botsHost?.online, data.botsHost?.error)}
+          ${statusItem('MercadoPago', data.mercadoPago?.online)}`;
+      } catch (err) {
+        container.innerHTML = `<h3>🔧 Status do Sistema</h3><p style="color:#ff4f5e;">Erro ao carregar status: ${err.message}</p>`;
+        console.error('Erro ao carregar status:', err);
+      }
+    }
+
+    // --- Função para carregar cupons ---
+    async function carregarCupons() {
+      const lista = document.getElementById('lista-cupons');
+      lista.innerHTML = '<li>Carregando cupons...</li>';
+      
+      try {
+        const res = await fetch('/api/cupom/listar');
+        const data = await parseJsonResponse(res);
+        
+        if (!res.ok) {
+          throw new Error(data.message || `HTTP ${res.status}`);
+        }
+
+        if (data.cupons && data.cupons.length > 0) {
+          lista.innerHTML = data.cupons.map(c => 
+            `<li><span><strong>${c.codigo}</strong> — ${c.desconto}% desconto</span></li>`
+          ).join('');
+        } else {
+          lista.innerHTML = '<li>Nenhum cupom encontrado.</li>';
+        }
+      } catch (err) {
+        lista.innerHTML = `<li style="color:#ff4f5e;">Erro ao carregar cupons: ${err.message}</li>`;
+        console.error('Erro ao carregar cupons:', err);
+      }
+    }
+
+    // --- Envio do formulário de criação de cupom ---
+    document.getElementById('form-cupom').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const codigo = document.getElementById('codigo').value.trim();
+      const desconto = parseInt(document.getElementById('desconto').value, 10);
+
+      if (!codigo || isNaN(desconto) || desconto < 1 || desconto > 100) {
+        alert('Por favor, insira um código válido e um desconto entre 1 e 100.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/cupom/criar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ codigo, desconto })
+        });
+
+        const data = await parseJsonResponse(res);
+        
+        if (!res.ok) {
+          throw new Error(data.message || `HTTP ${res.status}`);
+        }
+
+        alert('Cupom criado com sucesso!');
+        e.target.reset();
+        carregarCupons();
+
+      } catch (err) {
+        alert(`Erro ao criar cupom: ${err.message}`);
+        console.error('Erro ao criar cupom:', err);
+      }
+    });
+  </script>
+
+</body>
+</html>

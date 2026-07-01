@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Solutions</title>
+    <style type="text/css">@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:400;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:500;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/cyrillic-ext/wght/normal.woff2);unicode-range:U+0460-052F,U+1C80-1C88,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/greek/wght/normal.woff2);unicode-range:U+0370-03FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/greek-ext/wght/normal.woff2);unicode-range:U+1F00-1FFF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/latin-ext/wght/normal.woff2);unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:Inter;font-style:normal;font-weight:700;src:url(/cf-fonts/v/inter/5.0.16/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}</style>
+    <link rel="stylesheet" href="./styles/dashboard.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/user-dropdown.css">
+    <script src="./discord-auth.js" type="a9feb176de650abc83e4299c-text/javascript"></script>
+    <link rel="icon" type="image/png" href="./TESTE.png">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Elementos de background -->
+    <div class="grid-overlay"></div>
+    <div class="noise-texture"></div>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    
+    <!-- Tela de Manutenção -->
+    <div id="maintenance-screen" class="maintenance-screen">
+        <div class="maintenance-content">
+            <div class="maintenance-icon">🛠️</div>
+            <h1 class="maintenance-title">Sistema em Manutenção</h1>
+            <p class="maintenance-message">Estamos realizando algumas melhorias no sistema.</p>
+
+            <div class="command-info">
+                <p><strong>Enquanto isso, você pode gerenciar seu bot pelo Discord:</strong></p>
+                <p>Use o comando <code>/apps</code> na área de comandos do servidor da Royal Solutions.</p>
+            </div>
+
+            <div class="buttons-container">
+                <a href="https://discord.gg/ZTduQNJa6r" target="_blank" class="discord-button">
+                    <div class="button-content">
+                        <img src="../images/discord.png" alt="Discord">
+                        <div class="button-text">
+                            <span class="button-main-text">Entre no Discord</span>
+                            <span class="button-sub-text">Royal Solutionss</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="countdown">
+                <p>Redirecionando em <span id="countdown" class="countdown-number">10</span> segundos...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="header">
+            <!-- Navegação -->
+            <nav id="main-nav">
+                <div class="nav-container">
+                    <a href="/" class="logo">
+                <img src="./TESTE.png" alt="Astex Logo">
+                <span>Royal Solutions</span>
+                    </a>
+                    <div class="menu">
+                        <a href="/">Inicio</a>
+                        <a href="/planos">Planos</a>
+                    <a href="/termos">Termos</a>
+                        <div id="user-profile" style="display: none;"></div>
+                <a href="/login" onclick="if (!window.__cfRLUnblockHandlers) return false; loginWithDiscord()" class="login-btn" data-cf-modified-a9feb176de650abc83e4299c-=""><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </div>
+                    <button class="menu-mobile-btn">
+                <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </header><br><br><br>
+
+        <!-- Conteúdo principal -->
+        <main>
+            <div class="welcome-message">
+                <h1 id="saudacao"></h1>
+                <div id="login-message" style="display: none;">
+                    <p>Olá, visitante! <a href="#login" onclick="if (!window.__cfRLUnblockHandlers) return false; loginWithDiscord()" data-cf-modified-a9feb176de650abc83e4299c-="">Faça login aqui</a>.</p>
+                </div>
+            </div>
+
+            <script type="a9feb176de650abc83e4299c-text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+                    const menuBtn = document.querySelector('.menu-mobile-btn');
+                    const menu = document.querySelector('.menu');
+
+                    menuBtn.addEventListener('click', function () {
+                        menu.classList.toggle('mobile-active');
+                    });
+
+                    document.addEventListener('click', function (e) {
+                        if (!menu.contains(e.target) && !menuBtn.contains(e.target)) {
+                            menu.classList.remove('mobile-active');
+                        }
+                    });
+                });
+            </script>
+
+            <script type="a9feb176de650abc83e4299c-text/javascript">
+                document.addEventListener('DOMContentLoaded', () => {
+                    const saudacao = document.getElementById('saudacao');
+                    const loginMessage = document.getElementById('login-message');
+                    const token = localStorage.getItem('discord_token');
+
+                    if (token) {
+                        fetch('https://discord.com/api/users/@me', {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Erro ao obter informações do usuário');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                saudacao.textContent = `Olá, ${data.username}`;
+                                loginMessage.style.display = 'none';
+                            })
+                            .catch(error => {
+                                console.error('Erro ao obter informações do usuário:', error);
+                                saudacao.textContent = 'Olá, visitante!';
+                                loginMessage.style.display = 'block';
+                            });
+                    } else {
+                        // Se não estiver logado
+                        saudacao.textContent = 'Olá, visitante!';
+                        loginMessage.style.display = 'block';
+                    }
+                });
+            </script>
+
+            <p class="descricao">
+                Gerencie suas aplicações aqui. Você pode alterar o nome, o token, gerenciar a equipe e muito mais.
+            </p>
+
+            <!-- Abas -->
+            <div class="tabs">
+                <button class="tab active" onclick="if (!window.__cfRLUnblockHandlers) return false; mostrarAba('aplicacoes')" data-cf-modified-a9feb176de650abc83e4299c-="">Aplicações</button>
+                <button class="tab" onclick="if (!window.__cfRLUnblockHandlers) return false; mostrarAba('faturas')" data-cf-modified-a9feb176de650abc83e4299c-="">Faturas</button>
+            </div><br>
+
+            <!-- Aplicações -->
+            <div id="aplicacoes" class="aba-conteudo">
+                <input type="text" id="busca" placeholder="Procure por aplicações...">
+                <div id="lista-aplicacoes" class="aplicacoes-lista"></div>
+            </div>
+
+            <!-- Faturas -->
+            <div id="faturas" class="aba-conteudo" style="display: none;">
+                <h2>Minhas Faturas</h2>
+                <div id="lista-faturas" class="faturas-lista"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <script type="a9feb176de650abc83e4299c-text/javascript">
+        async function checkMaintenanceMode() {
+            try {
+                const response = await fetch('../database/configsites.json');
+                const config = await response.json();
+
+                if (config.maintenance.dashboard) {
+                    document.getElementById('maintenance-screen').style.display = 'block';
+                    document.querySelector('.dashboard-container').style.display = 'none';
+                    startCountdown();
+                }
+            } catch (error) {
+                console.error('Erro ao verificar modo de manutenção:', error);
+            }
+        }
+
+        // Função para iniciar a contagem regressiva
+        function startCountdown() {
+            let seconds = 10;
+            const countdownElement = document.querySelector('.countdown-number');
+
+            const interval = setInterval(() => {
+                seconds--;
+                if (countdownElement) {
+                    countdownElement.textContent = seconds;
+                }
+
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    window.location.href = '/';
+                }
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkMaintenanceMode();
+
+            // Valida a sessão do usuário antes de carregar a dashboard
+            fetch('/auth/status', { credentials: 'include' })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.isAuthenticated) {
+                        window.location.href = '/login';
+                    } else {
+                        document.getElementById('saudacao').textContent = `Olá, ${data.user.username}`;
+                        // Carrega config da API e bots
+                        fetch(window.location.origin + '/database/api-config.json')
+                            .then(response => response.json())
+                            .then(config => {
+                                const API_URL = config.API_URL;
+                                const API_SECRET = config.API_SECRET;
+                                carregarAplicacoes(API_URL, API_SECRET, data.user.id);
+                            })
+                            .catch(() => {
+                                document.getElementById('lista-aplicacoes').innerHTML = '<p>Erro ao carregar configuração da API.</p>';
+                            });
+                    }
+                });
+        });
+
+        function mostrarAba(aba) {
+            // Oculta todas as abas
+            document.getElementById('aplicacoes').style.display = 'none';
+            document.getElementById('faturas').style.display = 'none';
+
+            // Remove a classe "active" de todas as abas
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+
+            // Exibe a aba selecionada
+            document.getElementById(aba).style.display = 'block';
+
+            const listaFaturas = document.getElementById('faturas');
+
+            // Simula o carregamento das faturas (em beta)
+            listaFaturas.innerHTML = `
+        <div class="no-apps-message">
+            <span class="material-icons no-apps-icon">credit_card</span>
+            <p><strong>O sistema de faturas está em fase beta.</strong></p>
+            <p>Em breve, você poderá visualizar e gerenciar suas faturas aqui.</p>
+            <a href="/planos" class="botao-comprar">Ver Planos</a>
+        </div>
+    `;
+
+
+            // Adiciona a classe "active" ao botão da aba selecionada
+            document.querySelector(`button[onclick="mostrarAba('${aba}')"]`).classList.add('active');
+        }
+
+        // Função para obter o caminho absoluto do arquivo de configuração
+        function getApiConfigPath() {
+            // Garante que sempre busque do root, independente da porta
+            return window.location.origin + '/database/api-config.json';
+        }
+
+        fetch(getApiConfigPath())
+            .then(response => {
+                if (!response.ok) throw new Error('Erro ao carregar configuração da API.');
+                return response.json();
+            })
+            .then(config => {
+                const API_URL = config.API_URL;
+                const API_SECRET = config.API_SECRET;
+                carregarAplicacoes(API_URL, API_SECRET);
+            })
+            .catch((err) => {
+                document.getElementById('lista-aplicacoes').innerHTML = `<p>${err.message}</p>`;
+            });
+
+        function carregarAplicacoes(API_URL, API_SECRET, userId) {
+            const listaAplicacoes = document.getElementById('lista-aplicacoes');
+            listaAplicacoes.innerHTML = '';
+
+            if (!API_URL || !API_SECRET) {
+                listaAplicacoes.innerHTML = '<p>Erro: API não configurada.</p>';
+                return;
+            }
+
+            fetch(API_URL, {
+                headers: {
+                    'x-api-key': API_SECRET
+                },
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Acesso não autorizado à API. Verifique o secret.');
+                    }
+                    throw new Error('Erro ao carregar bots.');
+                }
+                return response.json();
+            })
+            .then(bots => {
+                // Filtra bots pelo owner (comparação robusta)
+                const userBots = bots.filter(bot => String(bot.value.owner).trim() === String(userId).trim());
+                console.log('ID do usuário logado:', userId);
+                console.log('Owners dos bots:', bots.map(bot => bot.value.owner));
+                listaAplicacoes.innerHTML = '';
+                if (userBots.length > 0) {
+                    userBots.forEach(bot => {
+                        const appLink = document.createElement('a');
+                        appLink.href = `/app/${bot.key}`;
+                        appLink.className = 'aplicacao';
+                        appLink.innerHTML = `
+                            <h3>${bot.value.nome}</h3>
+                            <p>${bot.key}</p>
+                        `;
+                        listaAplicacoes.appendChild(appLink);
+                    });
+                } else {
+                    listaAplicacoes.innerHTML = `
+                        <div class="no-apps-message">
+                            <span class="material-icons no-apps-icon">monetization_on</span>
+                            <p><strong>Você ainda não possui nenhum bot ativo.</strong></p>
+                            <p>Adquira um plano e crie seu bot agora mesmo.</p>
+                            <a href="/planos" class="botao-comprar">Ver Planos</a>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao carregar bots:', error);
+                listaAplicacoes.innerHTML = `<p>${error.message}</p>`;
+            });
+        }
+    </script>
+
+    <!-- Salva o token do Discord no localStorage se vier na URL -->
+    <script type="a9feb176de650abc83e4299c-text/javascript">
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenFromUrl = urlParams.get('token');
+        if (tokenFromUrl) {
+            localStorage.setItem('discord_token', tokenFromUrl);
+            // Remove o token da URL para evitar exposição
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
+
+<script src="../teste/rocket-loader.min.js" data-cf-settings="a9feb176de650abc83e4299c-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9526cd7f7eb1e841","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.6.2","token":"318d05e15f0246efa8397e46589e666e"}' crossorigin="anonymous"></script>
+</body>
+
+</html>
