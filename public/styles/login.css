@@ -1,0 +1,423 @@
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+
+ body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: var(--background-dark);
+    position: relative;
+    height: 100vh;
+     display: flex;
+    align-items: center;
+     justify-content: center;
+}
+
+/* Background complexo e detalhado (similar ao index.html) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    opacity: 0.9;
+    background: 
+        radial-gradient(circle at 20% 35%, rgba(0, 191, 255, 0.25), transparent 30%),
+        radial-gradient(circle at 75% 15%, rgba(0, 191, 255, 0.25), transparent 25%),
+        radial-gradient(circle at 85% 75%, rgba(0, 150, 255, 0.22), transparent 35%),
+        radial-gradient(circle at 10% 85%, rgba(0, 210, 230, 0.15), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(0, 180, 255, 0.1), transparent 50%),
+        linear-gradient(135deg, #040418 0%, #040418 50%, #02020e 100%);
+    animation: backgroundPulse 20s infinite alternate;
+}
+
+@keyframes backgroundPulse {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 10% 20%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+ }
+
+ /* Container de Login */
+ .login-container {
+    background: rgba(10, 15, 25, 0.75);
+    padding: 3.5rem 3rem 3rem;
+     text-align: center;
+    max-width: 430px;
+    width: 92%;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                0 0 80px rgba(0, 191, 255, 0.15);
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out;
+    border: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efeito de brilho no container */
+.login-container::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(0, 210, 230, 0.1) 0%,
+        transparent 50%
+    );
+    top: -50%;
+    left: -50%;
+    z-index: -1;
+    animation: rotateGlow 15s linear infinite;
+}
+
+@keyframes rotateGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Elemento decorativo superior */
+.login-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to right, #00D2E6, #0080FF);
+    border-radius: 20px 20px 0 0;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.7rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #fff, #00D2E6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+ }
+
+ .divider {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #00D2E6, #0080FF);
+    margin: 0 auto 2.2rem;
+    border-radius: 2px;
+    position: relative;
+ }
+
+ /* Botão de Login */
+ .discord-button {
+    background: linear-gradient(135deg, #00D2E6, #0080FF);
+     color: #fff;
+     border: none;
+    padding: 1rem 1.8rem;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1.1rem;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+     width: 100%;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.25);
+    position: relative;
+    overflow: hidden;
+    outline: none;
+ }
+
+ .discord-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 191, 255, 0.35);
+    background: linear-gradient(135deg, #00E0F5, #0090FF);
+ }
+
+ .discord-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
+}
+
+.discord-button img {
+    width: 26px;
+    height: 26px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Efeito de brilho no botão */
+.discord-button::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    filter: blur(10px);
+    top: 0;
+    left: -50px;
+    transform: skewX(-20deg);
+    transition: all 0.6s ease;
+}
+
+.discord-button:hover::after {
+    left: 110%;
+ }
+
+ /* Texto Informativo */
+ .info-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Link de criação de conta */
+.create-account {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+.create-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    background: rgba(0, 191, 255, 0.1);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.create-link:hover {
+    background: rgba(0, 191, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.create-link i {
+    font-size: 0.9rem;
+}
+
+.create-link::after {
+    display: none;
+}
+
+a {
+    color: #00D2E6;
+     text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+    display: inline-block;
+ }
+
+ a:hover {
+    color: #00A2FF;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(to right, #00D2E6, #0080FF);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Botão Voltar */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 20;
+}
+
+.back-button::after {
+    display: none;
+}
+
+.back-button:hover {
+    background: rgba(0, 191, 255, 0.2);
+    transform: translateX(-3px);
+}
+
+.back-button i {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.back-button:hover i {
+    transform: translateX(-3px);
+}
+
+/* Elementos estilo index.html */
+.grid-overlay, .noise-texture, .floating-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.grid-overlay {
+    background-image: 
+        linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.noise-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+    opacity: 0.2;
+}
+
+.floating-elements {
+    overflow: hidden;
+}
+
+.floating-element {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.3;
+    animation: float 20s infinite linear;
+}
+
+.floating-element:nth-child(1) {
+    width: 400px;
+    height: 400px;
+    top: 10%;
+    left: -150px;
+    animation-duration: 40s;
+    background: radial-gradient(circle, rgba(0, 191, 255, 0.15) 0%, rgba(0, 128, 255, 0.08) 50%, transparent 70%);
+}
+
+.floating-element:nth-child(2) {
+    width: 350px;
+    height: 350px;
+    top: 60%;
+    right: -100px;
+    animation-duration: 50s;
+    animation-delay: -10s;
+    background: radial-gradient(circle, rgba(0, 191, 255, 0.15) 0%, rgba(0, 128, 255, 0.08) 50%, transparent 70%);
+}
+
+.floating-element:nth-child(3) {
+    width: 250px;
+    height: 250px;
+    bottom: 5%;
+    left: 20%;
+    animation-duration: 35s;
+    animation-delay: -5s;
+    background: radial-gradient(circle, rgba(0, 191, 255, 0.12) 0%, rgba(0, 128, 255, 0.06) 50%, transparent 70%);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translateY(-40px) rotate(180deg) scale(1.05);
+    }
+    100% {
+        transform: translateY(0) rotate(360deg) scale(1);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .login-container {
+        padding: 3rem 1.8rem 2.2rem;
+        width: 92%;
+        border-radius: 18px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .discord-button {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .back-button {
+        top: 15px;
+        left: 15px;
+        width: 32px;
+        height: 32px;
+    }
+    
+    .back-button i {
+        font-size: 14px;
+    }
+    
+    .info-text, .create-account {
+        font-size: 0.85rem;
+    }
+}
+
+/* Animação de foco no container */
+.login-container:focus-within {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35), 
+                0 0 100px rgba(0, 191, 255, 0.2);
+ }

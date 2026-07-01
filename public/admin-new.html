@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Sky Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0e0f1b 0%, #1a1f3a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .admin-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #0a0b13;
+            border-right: 1px solid #1c1c2e;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #1c1c2e;
+        }
+
+        .sidebar-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .sidebar-logo h2 {
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: #a0a0a0;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: #2e3af5;
+            color: #fff;
+        }
+
+        .sidebar-nav i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #0a0b13;
+            border-bottom: 1px solid #1c1c2e;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar h1 {
+            font-size: 1.8rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .navbar h1::before {
+            content: '⚙️';
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .navbar-actions button {
+            background: #2e3af5;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .navbar-actions button:hover {
+            background: #1c24b8;
+            box-shadow: 0 0 12px rgba(46, 58, 245, 0.5);
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #a0a0a0;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #1c1c2e;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+        }
+
+        .tab:hover {
+            color: #fff;
+        }
+
+        .tab.active {
+            color: #2e3af5;
+            border-bottom-color: #2e3af5;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: #151522;
+            border: 1px solid #1f1f2f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #2e3af5;
+            box-shadow: 0 0 20px rgba(46, 58, 245, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #a0a0a0;
+            text-transform: uppercase;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: #2e3af5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00d2e6;
+        }
+
+        .card-change {
+            color: #25e177;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Table */
+        .table-container {
+            background: #151522;
+            border: 1px solid #1f1f2f;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #0a0b13;
+            border-bottom: 1px solid #1f1f2f;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            color: #a0a0a0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #1f1f2f;
+            color: #e0e0e0;
+        }
+
+        tbody tr:hover {
+            background: #1a1c2c;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #25e17733;
+            color: #25e177;
+        }
+
+        .status-inactive {
+            background: #ff4f5e33;
+            color: #ff4f5e;
+        }
+
+        .status-pending {
+            background: #ffa50033;
+            color: #ffa500;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: #1a1c2c;
+            border: 1px solid #1f1f2f;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2e3af5;
+            box-shadow: 0 0 8px rgba(46, 58, 245, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #2e3af5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1c24b8;
+            box-shadow: 0 0 12px rgba(46, 58, 245, 0.5);
+        }
+
+        .btn-secondary {
+            background: #1f1f2f;
+            color: #a0a0a0;
+        }
+
+        .btn-secondary:hover {
+            background: #2a2a3d;
+            color: #e0e0e0;
+        }
+
+        .btn-danger {
+            background: #ff4f5e;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff1a2e;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #a0a0a0;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #1f1f2f;
+            border-top-color: #2e3af5;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error */
+        .error {
+            background: #ff4f5e33;
+            border: 1px solid #ff4f5e;
+            color: #ff4f5e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Success */
+        .success {
+            background: #25e17733;
+            border: 1px solid #25e177;
+            color: #25e177;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="./TESTE.png" alt="Logo">
+                <h2>Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <li><a class="nav-link active" data-section="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a class="nav-link" data-section="users"><i class="fas fa-users"></i> Usuários</a></li>
+                <li><a class="nav-link" data-section="products"><i class="fas fa-cube"></i> Produtos</a></li>
+                <li><a class="nav-link" data-section="orders"><i class="fas fa-shopping-cart"></i> Pedidos</a></li>
+                <li><a class="nav-link" data-section="coupons"><i class="fas fa-ticket-alt"></i> Cupons</a></li>
+                <li><a class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Configurações</a></li>
+                <li><a class="nav-link" data-section="logs"><i class="fas fa-file-alt"></i> Logs</a></li>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Navbar -->
+            <nav class="navbar">
+                <h1>Painel de Administração</h1>
+                <div class="navbar-actions">
+                    <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                </div>
+            </nav>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="section">
+                    <div class="page-header">
+                        <h2>Dashboard</h2>
+                        <p>Visão geral do sistema</p>
+                    </div>
+
+                    <div class="cards-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Usuários</div>
+                                <div class="card-icon"><i class="fas fa-users"></i></div>
+                            </div>
+                            <div class="card-value" id="stat-users">0</div>
+                            <div class="card-change">+5% este mês</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Produtos</div>
+                                <div class="card-icon"><i class="fas fa-cube"></i></div>
+                            </div>
+                            <div class="card-value" id="stat-products">0</div>
+                            <div class="card-change">+2 novos</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Pedidos</div>
+                                <div class="card-icon"><i class="fas fa-shopping-cart"></i></div>
+                            </div>
+                            <div class="card-value" id="stat-orders">0</div>
+                            <div class="card-change">+12% este mês</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Receita</div>
+                                <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+                            </div>
+                            <div class="card-value" id="stat-revenue">R$ 0</div>
+                            <div class="card-change">+8% este mês</div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #fff;">Últimos Pedidos</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Produto</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-orders">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando pedidos...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Users Section -->
+                <section id="users-section" class="section" style="display: none;">
+                    <div class="page-header">
+                        <h2>Gerenciar Usuários</h2>
+                        <p>Visualize e gerencie todos os usuários do sistema</p>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Criado em</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando usuários...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section id="products-section" class="section" style="display: none;">
+                    <div class="page-header">
+                        <h2>Gerenciar Produtos</h2>
+                        <p>Visualize e gerencie todos os produtos</p>
+                    </div>
+
+                    <button class="btn btn-primary" style="margin-bottom: 1rem;" onclick="openProductForm()">
+                        <i class="fas fa-plus"></i> Novo Produto
+                    </button>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Preço</th>
+                                    <th>Categoria</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando produtos...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Orders Section -->
+                <section id="orders-section" class="section" style="display: none;">
+                    <div class="page-header">
+                        <h2>Gerenciar Pedidos</h2>
+                        <p>Visualize e gerencie todos os pedidos</p>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Produto</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table">
+                                <tr>
+                                    <td colspan="7" class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando pedidos...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Coupons Section -->
+                <section id="coupons-section" class="section" style="display: none;">
+                    <div class="page-header">
+                        <h2>Gerenciar Cupons</h2>
+                        <p>Crie e gerencie cupons de desconto</p>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h3 style="color: #fff; margin-bottom: 1rem;">Criar Novo Cupom</h3>
+                        <div class="form-group">
+                            <label>Código do Cupom</label>
+                            <input type="text" id="coupon-code" placeholder="Ex: DESCONTO10">
+                        </div>
+                        <div class="form-group">
+                            <label>Desconto (%)</label>
+                            <input type="number" id="coupon-discount" placeholder="Ex: 10" min="1" max="100">
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="createCoupon()">Criar Cupom</button>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #fff; margin-bottom: 1rem;">Cupons Ativos</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Desconto</th>
+                                    <th>Usos</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="coupons-table">
+                                <tr>
+                                    <td colspan="5" class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando cupons...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings-section" class="section" style="display: none;">
+                    <div class="page-header">
+                        <h2>Configurações do Sistema</h2>
+                        <p>Gerencie as configurações gerais</p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: #fff; margin-bottom: 1rem;">Informações do Sistema</h3>
+                        <div id="system-info" style="color: #a0a0a0;">
+                            <p>Carregando informações...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Logs Section -->
+                <section id="logs-section" class="section" style="display: none;">
+                    <div class="page-header">
+                        <h2>Logs do Sistema</h2>
+                        <p>Visualize os logs de atividades</p>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Ação</th>
+                                    <th>Usuário</th>
+                                    <th>Detalhes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-table">
+                                <tr>
+                                    <td colspan="4" class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando logs...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://soluctions.onrender.com';
+
+        // Função para fazer requisições à API
+        async function apiCall(endpoint, options = {}) {
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                credentials: 'include'
+            });
+
+            if (response.status === 401) {
+                window.location.href = '/login';
+                return null;
+            }
+
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+
+            return response.json();
+        }
+
+        // Logout
+        async function logout() {
+            try {
+                await apiCall('/api/auth/logout', { method: 'POST' });
+                window.location.href = '/';
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+                window.location.href = '/';
+            }
+        }
+
+        // Navegação entre seções
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const section = link.getAttribute('data-section');
+
+                // Remover active de todos os links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Esconder todas as seções
+                document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+
+                // Mostrar seção selecionada
+                document.getElementById(`${section}-section`).style.display = 'block';
+
+                // Carregar dados da seção
+                loadSectionData(section);
+            });
+        });
+
+        // Carregar dados da seção
+        async function loadSectionData(section) {
+            try {
+                switch (section) {
+                    case 'dashboard':
+                        await loadDashboard();
+                        break;
+                    case 'users':
+                        await loadUsers();
+                        break;
+                    case 'products':
+                        await loadProducts();
+                        break;
+                    case 'orders':
+                        await loadOrders();
+                        break;
+                    case 'coupons':
+                        await loadCoupons();
+                        break;
+                    case 'settings':
+                        await loadSettings();
+                        break;
+                    case 'logs':
+                        await loadLogs();
+                        break;
+                }
+            } catch (error) {
+                console.error(`Erro ao carregar ${section}:`, error);
+            }
+        }
+
+        // Carregar dashboard
+        async function loadDashboard() {
+            try {
+                const stats = await apiCall('/api/stats');
+                document.getElementById('stat-users').textContent = stats.users || 0;
+                document.getElementById('stat-products').textContent = stats.products || 0;
+                document.getElementById('stat-orders').textContent = stats.orders || 0;
+                document.getElementById('stat-revenue').textContent = `R$ ${(stats.revenue || 0).toFixed(2)}`;
+
+                const orders = await apiCall('/api/orders?limit=5');
+                const tbody = document.getElementById('recent-orders');
+                tbody.innerHTML = '';
+
+                if (orders.data && orders.data.length > 0) {
+                    orders.data.forEach(order => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${order.id}</td>
+                            <td>${order.customer_name}</td>
+                            <td>${order.product_name}</td>
+                            <td>R$ ${order.amount.toFixed(2)}</td>
+                            <td><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></td>
+                            <td>${new Date(order.created_at).toLocaleDateString('pt-BR')}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #a0a0a0;">Nenhum pedido encontrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar dashboard:', error);
+            }
+        }
+
+        // Carregar usuários
+        async function loadUsers() {
+            try {
+                const users = await apiCall('/api/users');
+                const tbody = document.getElementById('users-table');
+                tbody.innerHTML = '';
+
+                if (users.data && users.data.length > 0) {
+                    users.data.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td><span class="status-badge status-active">Ativo</span></td>
+                            <td>${new Date(user.created_at).toLocaleDateString('pt-BR')}</td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Editar</button></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #a0a0a0;">Nenhum usuário encontrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+            }
+        }
+
+        // Carregar produtos
+        async function loadProducts() {
+            try {
+                const products = await apiCall('/api/products');
+                const tbody = document.getElementById('products-table');
+                tbody.innerHTML = '';
+
+                if (products.data && products.data.length > 0) {
+                    products.data.forEach(product => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${product.id}</td>
+                            <td>${product.name}</td>
+                            <td>R$ ${product.price.toFixed(2)}</td>
+                            <td>${product.category}</td>
+                            <td><span class="status-badge status-active">Ativo</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Editar</button></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #a0a0a0;">Nenhum produto encontrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar produtos:', error);
+            }
+        }
+
+        // Carregar pedidos
+        async function loadOrders() {
+            try {
+                const orders = await apiCall('/api/orders');
+                const tbody = document.getElementById('orders-table');
+                tbody.innerHTML = '';
+
+                if (orders.data && orders.data.length > 0) {
+                    orders.data.forEach(order => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${order.id}</td>
+                            <td>${order.customer_name}</td>
+                            <td>${order.product_name}</td>
+                            <td>R$ ${order.amount.toFixed(2)}</td>
+                            <td><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></td>
+                            <td>${new Date(order.created_at).toLocaleDateString('pt-BR')}</td>
+                            <td><button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Ver</button></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #a0a0a0;">Nenhum pedido encontrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar pedidos:', error);
+            }
+        }
+
+        // Carregar cupons
+        async function loadCoupons() {
+            try {
+                const coupons = await apiCall('/api/cupom/listar');
+                const tbody = document.getElementById('coupons-table');
+                tbody.innerHTML = '';
+
+                if (coupons.cupons && coupons.cupons.length > 0) {
+                    coupons.cupons.forEach(coupon => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${coupon.codigo}</td>
+                            <td>${coupon.desconto}%</td>
+                            <td>${coupon.usos || 0}</td>
+                            <td><span class="status-badge status-active">Ativo</span></td>
+                            <td><button class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;" onclick="deleteCoupon('${coupon.codigo}')">Deletar</button></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #a0a0a0;">Nenhum cupom encontrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar cupons:', error);
+            }
+        }
+
+        // Criar cupom
+        async function createCoupon() {
+            const code = document.getElementById('coupon-code').value;
+            const discount = document.getElementById('coupon-discount').value;
+
+            if (!code || !discount) {
+                alert('Preencha todos os campos');
+                return;
+            }
+
+            try {
+                await apiCall('/api/cupom/criar', {
+                    method: 'POST',
+                    body: JSON.stringify({ codigo: code, desconto: parseInt(discount) })
+                });
+
+                alert('Cupom criado com sucesso!');
+                document.getElementById('coupon-code').value = '';
+                document.getElementById('coupon-discount').value = '';
+                await loadCoupons();
+            } catch (error) {
+                console.error('Erro ao criar cupom:', error);
+                alert('Erro ao criar cupom');
+            }
+        }
+
+        // Carregar configurações
+        async function loadSettings() {
+            try {
+                const settings = await apiCall('/api/settings');
+                const infoDiv = document.getElementById('system-info');
+                infoDiv.innerHTML = `
+                    <p><strong>Versão:</strong> ${settings.version || 'N/A'}</p>
+                    <p><strong>Status:</strong> ${settings.status || 'N/A'}</p>
+                    <p><strong>Última Atualização:</strong> ${new Date(settings.lastUpdate).toLocaleDateString('pt-BR')}</p>
+                `;
+            } catch (error) {
+                console.error('Erro ao carregar configurações:', error);
+            }
+        }
+
+        // Carregar logs
+        async function loadLogs() {
+            try {
+                const logs = await apiCall('/api/logs');
+                const tbody = document.getElementById('logs-table');
+                tbody.innerHTML = '';
+
+                if (logs.data && logs.data.length > 0) {
+                    logs.data.forEach(log => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${new Date(log.timestamp).toLocaleString('pt-BR')}</td>
+                            <td>${log.action}</td>
+                            <td>${log.user}</td>
+                            <td>${log.details}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #a0a0a0;">Nenhum log encontrado</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar logs:', error);
+            }
+        }
+
+        // Carregar dashboard ao iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+        });
+    </script>
+</body>
+
+</html>

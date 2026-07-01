@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerenciar Bot</title>
+  <link rel="stylesheet" href="./styles/styles.css">
+  <link rel="stylesheet" href="./styles/dashboard.css">
+  <link rel="stylesheet" href="./styles/user-dropdown.css">
+  <link rel="icon" type="image/png" href="./TESTE.png">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      background: #181a24 url('./styles/bg-pattern.png') repeat;
+      margin: 0;
+    }
+    .main-panel {
+      max-width: 1100px;
+      margin: 6rem auto 4rem auto;
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .left-col {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .right-col {
+      flex: 1;
+      min-width: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .card {
+      background: rgba(30, 32, 40, 0.95);
+      border-radius: 14px;
+      border: 1px solid rgba(0, 210, 230, 0.15);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 2rem 1.5rem;
+      color: #fff;
+      margin-bottom: 0;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      color: #00D2E6;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .token-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .token-input {
+      background: #23243a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      letter-spacing: 2px;
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      color: #00D2E6;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      transition: color 0.2s;
+    }
+    .icon-btn:hover { color: #00A2FF; }
+    .action-btn {
+      background: linear-gradient(to right, #00D2E6, #00A2FF);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+      width: 100%;
+    }
+    .action-btn:hover {
+      box-shadow: 0 5px 15px rgba(0, 210, 230, 0.2);
+      transform: translateY(-2px);
+    }
+    .danger-btn {
+      background: #2d1616;
+      color: #ff4d4d;
+      border: 1px solid #ff4d4d;
+      border-radius: 8px;
+      padding: 0.7rem 1.2rem;
+      font-weight: bold;
+      float: right;
+      margin-top: -2.5rem;
+      margin-bottom: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .danger-btn:hover { background: #ff4d4d; color: #fff; }
+    .info-row { margin-bottom: 0.7rem; }
+    .info-label { color: #aaa; font-size: 0.98rem; }
+    .info-value { color: #fff; font-weight: bold; }
+    .days-card {
+      background: linear-gradient(135deg, #23243a 60%, #00D2E6 100%);
+      border-radius: 14px;
+      border: 1px solid #00D2E6;
+      color: #fff;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 24px rgba(0,210,230,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .days-number {
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #00D2E6;
+      margin: 0.5rem 0 0.2rem 0;
+    }
+    .days-label {
+      font-size: 1.1rem;
+      color: #fff;
+      opacity: 0.85;
+    }
+    @media (max-width: 900px) {
+      .main-panel { flex-direction: column; align-items: stretch; }
+      .right-col { min-width: 0; }
+    }
+    @media (max-width: 600px) {
+      .main-panel { padding: 0 0.5rem; }
+      .card, .days-card { padding: 1.2rem 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navegação -->
+  <nav id="main-nav">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <img src="./TESTE.png" alt="Astex Logo">
+        <span>Royal Solutions</span>
+      </a>
+      <div class="menu">
+        <a href="/">Inicio</a>
+        <a href="/planos">Planos</a>
+        <a href="/termos">Termos</a>
+        <div id="user-profile" style="display: none;"></div>
+        <a href="/login" onclick="if (!window.__cfRLUnblockHandlers) return false; loginWithDiscord()" class="login-btn" data-cf-modified-52b9be267821f3678aa56ea0-=""><i class="fas fa-sign-in-alt"></i> Login</a>
+      </div>
+      <button class="menu-mobile-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <div class="main-panel">
+    <div class="left-col">
+      <!-- Topo: Nome, status, ID, botão desligar -->
+      <div class="card" style="position:relative; margin-bottom:0.5rem;">
+        <div style="position:absolute; top:1.5rem; right:1.5rem; display:flex; gap:0.7rem;" id="bot-actions">
+          <!-- Botões serão inseridos dinamicamente pelo JS -->
+        </div>
+        <div style="font-size:1.5rem; font-weight:bold; margin-bottom:0.2rem;" id="bot-name">Nome do Bot</div>
+        <div style="color:#00D2E6; font-size:1.1rem; margin-bottom:0.5rem;" id="bot-status">Status: Carregando...</div>
+        <div style="font-size:0.98rem; color:#aaa;">ID da Aplicação: <span id="bot-id">Carregando...</span></div>
+      </div>
+      <!-- Token do Bot -->
+      <div class="card">
+        <div class="card-title"><span class="material-icons">vpn_key</span> Token do Bot</div>
+        <div class="token-row">
+          <input type="password" id="bot-token" class="token-input" value="Carregando..." readonly>
+          <button class="icon-btn" id="toggle-token"><span class="material-icons">visibility</span></button>
+        </div>
+        <button class="action-btn" onclick="updateToken()">Atualizar Token</button>
+      </div>
+      <!-- Reiniciar Bot -->
+      <div class="card" style="display:none;"></div>
+      <!-- Transferência de Posse -->
+      <div class="card">
+        <div class="card-title"><span class="material-icons">swap_horiz</span> Transferência de Posse</div>
+        <div class="info-row"><span class="info-label">ID do novo dono:</span></div>
+        <input type="text" id="new-owner-id" class="token-input" placeholder="Digite o ID do novo dono">
+        <button class="action-btn" onclick="transferOwnership()">Transferir</button>
+      </div>
+    </div>
+    <div class="right-col">
+      <div class="days-card">
+        <div class="material-icons" style="font-size:2.2rem; color:#fff;">event</div>
+        <div class="days-number" id="days-remaining">--</div>
+        <div class="days-label">dias restantes para o bot vencer</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function getApiConfig() {
+      const res = await fetch('/database/api-config.json');
+      if (!res.ok) throw new Error('Erro ao carregar configuração da API');
+      return res.json();
+    }
+
+    function renderBotActions(status) {
+      const actionsDiv = document.getElementById('bot-actions');
+      actionsDiv.innerHTML = '';
+      if (status === 'on') {
+        // Bot ligado: mostrar Desligar e Reiniciar
+        const desligarBtn = document.createElement('button');
+        desligarBtn.className = 'danger-btn';
+        desligarBtn.textContent = 'Desligar';
+        desligarBtn.onclick = stopBot;
+        actionsDiv.appendChild(desligarBtn);
+
+        const reiniciarBtn = document.createElement('button');
+        reiniciarBtn.className = 'action-btn';
+        reiniciarBtn.style.padding = '0.7rem 1.2rem';
+        reiniciarBtn.style.minWidth = 'unset';
+        reiniciarBtn.style.background = 'linear-gradient(to right,#00D2E6,#00A2FF)';
+        reiniciarBtn.style.color = '#fff';
+        reiniciarBtn.style.borderRadius = '8px';
+        reiniciarBtn.style.fontWeight = 'bold';
+        reiniciarBtn.textContent = 'Reiniciar';
+        reiniciarBtn.onclick = restartBot;
+        actionsDiv.appendChild(reiniciarBtn);
+      } else {
+        // Bot desligado: mostrar Ligar
+        const ligarBtn = document.createElement('button');
+        ligarBtn.className = 'action-btn';
+        ligarBtn.style.padding = '0.7rem 1.2rem';
+        ligarBtn.style.minWidth = 'unset';
+        ligarBtn.style.background = 'linear-gradient(to right,#00D2E6,#00A2FF)';
+        ligarBtn.style.color = '#fff';
+        ligarBtn.style.borderRadius = '8px';
+        ligarBtn.style.fontWeight = 'bold';
+        ligarBtn.textContent = 'Ligar';
+        ligarBtn.onclick = startBot;
+        actionsDiv.appendChild(ligarBtn);
+      }
+    }
+
+    async function loadBotData() {
+      try {
+        const pathParts = window.location.pathname.split('/');
+        const appId = pathParts[pathParts.length - 1];
+
+        const config = await getApiConfig();
+        const API_URL = config.API_URL;
+        const API_SECRET = config.API_SECRET;
+
+        // Busca todos os bots do usuário
+        const res = await fetch(API_URL, {
+          headers: { 'x-api-key': API_SECRET },
+          credentials: 'include'
+        });
+        if (!res.ok) throw new Error('Erro ao buscar bots na API');
+        const bots = await res.json();
+
+        // Procura o bot pelo appId
+        const bot = bots.find(b => b.key === appId);
+
+        if (!bot) return alert('Bot não encontrado na API externa');
+
+        // Preenche os campos
+        document.getElementById('bot-id').textContent = bot.key || '---';
+        document.getElementById('bot-name').textContent = bot.value.nome || 'Nome do Bot';
+        document.getElementById('bot-token').value = bot.value.token || '---';
+        document.getElementById('bot-status').textContent = bot.value.status === 'on' ? '🟢 ON' : '🔴 OFF';
+        document.getElementById('days-remaining').textContent = bot.value.diasRestantes !== undefined ? bot.value.diasRestantes : '--';
+        renderBotActions(bot.value.status);
+      } catch (err) {
+        console.error(err);
+        alert('Erro ao carregar os dados do bot');
+      }
+    }
+
+    document.getElementById('toggle-token').addEventListener('click', function() {
+      const input = document.getElementById('bot-token');
+      if (input.type === 'password') {
+        input.type = 'text';
+        this.innerHTML = '<span class="material-icons">visibility_off</span>';
+      } else {
+        input.type = 'password';
+        this.innerHTML = '<span class="material-icons">visibility</span>';
+      }
+    });
+
+    async function updateToken() {
+      // Implemente a lógica de atualização de token aqui
+      alert('Função de atualizar token não implementada.');
+    }
+
+    async function updateSquareStatus() {
+      const appId = window.location.pathname.split('/').pop();
+      const res = await fetch(`/api/square/${appId}/status`);
+      const data = await res.json();
+      // Considere 'running' ou 'online' como ON
+      const isOnline = data.status === 'running' || data.status === 'online';
+      document.getElementById('bot-status').textContent = isOnline ? '🟢 ON' : '🔴 OFF';
+      renderBotActions(isOnline ? 'on' : 'off');
+    }
+
+    // Chame updateSquareStatus ao carregar e após cada ação
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBotData();
+      updateSquareStatus();
+      setInterval(updateSquareStatus, 5000); // Atualiza status a cada 5 segundos
+    });
+
+    async function startBot() {
+      const appId = window.location.pathname.split('/').pop();
+      const res = await fetch(`/api/square/${appId}/start`, { method: 'POST' });
+      const data = await res.json();
+      alert(data.message || 'Bot ligado!');
+      await updateSquareStatus();
+    }
+
+    async function stopBot() {
+      const appId = window.location.pathname.split('/').pop();
+      const res = await fetch(`/api/square/${appId}/stop`, { method: 'POST' });
+      const data = await res.json();
+      alert(data.message || 'Bot desligado!');
+      await updateSquareStatus();
+    }
+
+    async function restartBot() {
+      const appId = window.location.pathname.split('/').pop();
+      const res = await fetch(`/api/square/${appId}/restart`, { method: 'POST' });
+      const data = await res.json();
+      alert(data.message || 'Bot reiniciado!');
+      await updateSquareStatus();
+    }
+
+    async function transferOwnership() {
+      const newOwnerId = document.getElementById('new-owner-id').value.trim();
+      if (!newOwnerId) return alert('Digite o ID do novo dono.');
+      alert('Função de transferência de posse não implementada para API externa.');
+    }
+  </script>
+</body>
+</html>
