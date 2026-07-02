@@ -94,6 +94,12 @@ const updateSettings = async (req, res, next) => {
 
     await config.save();
 
+    // Se alterou configurações do Discord, reinicializa a engine de auth
+    if (discord) {
+      const authEngine = require('../services/authEngine');
+      authEngine.init().catch(err => console.error('[ConfigController] Erro ao re-init authEngine:', err));
+    }
+
     await Log.registrar({
       nivel: 'audit',
       origem: 'admin:configuracoes',

@@ -4,11 +4,27 @@ const config = require('../config');
 const { User, Cliente } = require('../models');
 
 class AuthEngine {
-  constructor() {
-    this.init();
-  }
+  async init() {
+    // 0. Tenta carregar configurações do banco de dados (singleton)
+    let discordConfig = { ...config.discord };
+    try {
+      const { Configuracao } = require('../models');
+      const dbConfig = await Configuracao.findOne({ chave: 'global' });
+      if (dbConfig && dbConfig.discord && dbConfig.discord.clientId) {
+        discordConfig.clientId = dbConfig.discord.clientId;
+        discordConfig.clientSecret = dbConfig.discord.clientSecret;
+        discordConfig.redirectUri = dbConfig.discord.redirectUri;
+        console.log('[AuthEngine] Usando configurações do Discord vindas do banco de dados');
+      } else {
+        console.log('[AuthEngine] Usando configurações do Discord vindas das variáveis de ambiente');
+      }
+    } catch (err) {
+      console.error('[AuthEngine] Erro ao carregar config do banco, usando env:', err.message);
+    }
 
-  init() {
+    // Limpa estratégias anteriores se houver (para permitir re-init)
+    passport.unuse('discord');
+
     passport.serializeUser((user, done) => {
       done(null, user.discordId);
     });
@@ -25,9 +41,9 @@ class AuthEngine {
     passport.use(
       new DiscordStrategy(
         {
-          clientID: config.discord.clientId,
-          clientSecret: config.discord.clientSecret,
-          callbackURL: config.discord.redirectUri,
+          clientID: discordConfig.clientId,
+          clientSecret: discordConfig.clientSecret,
+          callbackURL: discordConfig.redirectUri,
           scope: ['identify', 'email'],
         },
         async (accessToken, refreshToken, profile, done) => {

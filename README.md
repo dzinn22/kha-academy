@@ -164,6 +164,16 @@ A API implementa as seguintes camadas de segurança:
 
 ---
 
+## Sincronização Dinâmica de Configurações
+
+A API v2.0 introduz um sistema de sincronização dinâmica para credenciais do Discord OAuth2, Mercado Pago e Discloud.
+
+- **Prioridade**: As configurações salvas no banco de dados (via Painel Admin) têm precedência sobre as variáveis de ambiente (`.env`).
+- **Hot-Reload**: Alterações feitas no Painel Admin são aplicadas instantaneamente à engine de autenticação sem necessidade de reiniciar o servidor.
+- **Fallback**: Caso não existam configurações no banco, o sistema utiliza automaticamente os valores definidos no `.env`.
+
+---
+
 ## Compatibilidade
 
 Esta versão 2.0 mantém 100% de compatibilidade com a versão anterior:

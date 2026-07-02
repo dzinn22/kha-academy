@@ -17,8 +17,6 @@ const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const session = require('express-session');
 const passport = require('passport');
-require('./services/authEngine');
-
 const app = express();
 
 // ─── Segurança ────────────────────────────────────────────────────────────────
@@ -127,6 +125,11 @@ app.use(errorHandler);
 // ─── Inicialização ────────────────────────────────────────────────────────────
 const start = async () => {
   await connectDB();
+  
+  // Inicializa a engine de autenticação após a conexão com o banco
+  const authEngine = require('./services/authEngine');
+  await authEngine.init();
+
   app.listen(config.port, () => {
     console.log(`[API] Servidor rodando na porta ${config.port}`);
     console.log(`[API] Documentação disponível em http://localhost:${config.port}/docs`);
