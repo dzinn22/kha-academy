@@ -1,7 +1,4 @@
 node_modules/
+config.local.json
 .env
-# uploads/images/
-# uploads/temp/
-# sources/
-# logs/
 *.log
